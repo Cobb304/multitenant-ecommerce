@@ -1,16 +1,16 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { Category } from "@/payload-types";
+import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import SubcategoryMenu from "./SubcategoryMenu";
 import useDropdownPosition from "./useDropdownPosition";
-
+import { CustomCategory } from "../types";
 
 interface Props {
-  category: Category;
+  category: CustomCategory;
   isActive?: boolean;
   isNavigaitonHovered?: boolean;
 }
@@ -22,6 +22,7 @@ export default function CategoryDropdown({
 }: Props) {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+
   const { getDropdownPosition } = useDropdownPosition(dropdownRef);
   const dropdownPosition = getDropdownPosition();
 
@@ -31,12 +32,16 @@ export default function CategoryDropdown({
   function handleOnMouseLeave() {
     setIsOpen(false);
   }
+  function handleToggleDropDown() {
+    if (category.subcategories?.docs?.length) setIsOpen((pervValue) => !pervValue);
+  }
 
   return (
     <div
       ref={dropdownRef}
       onMouseEnter={handleOnMouseEnter}
       onMouseLeave={handleOnMouseLeave}
+      onClick={handleToggleDropDown}
       className="relative"
     >
       <div className="relative">
@@ -45,9 +50,11 @@ export default function CategoryDropdown({
           className={cn(
             "h-11 px-4 bg-transparent border-transparent rounded-full hover:bg-white hover:border-primary text-black",
             isActive && !isNavigaitonHovered && "bg-white border-primary",
+            isOpen &&
+              "bg-white border-primary shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] -translate-x-1 -translate-y-1",
           )}
         >
-          {category.name}
+          <Link href={`/${category.slug === "all" ? "/" : category.slug}`}>{category.name}</Link>
         </Button>
         {category.subcategories && category.subcategories.length > 0 && (
           <div
