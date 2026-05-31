@@ -9,7 +9,8 @@
     "start": "next start",
     "lint": "eslint",
     "generate:types": "payload generate:types",
-    "db:fresh": "payload migrate:fresh"
+    "db:fresh": "payload migrate:fresh",
+    "db:seed": "tsx src/seed.ts"
   },
   "dependencies": {
     "@payloadcms/db-mongodb": "^3.85.0",
@@ -17,6 +18,7 @@
     "@payloadcms/richtext-lexical": "^3.85.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "dotenv": "^17.4.2",
     "graphql": "^16.14.0",
     "lucide-react": "^1.16.0",
     "next": "16.2.6",
@@ -36,6 +38,7 @@
     "eslint": "^9",
     "eslint-config-next": "16.2.6",
     "tailwindcss": "^4",
+    "tsx": "^4.22.3",
     "typescript": "^5"
   }
 }
